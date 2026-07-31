@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS agent_event_cursors;
+DROP TABLE IF EXISTS event_audience;
+DROP TABLE IF EXISTS events;
+DROP TABLE IF EXISTS world_ticks;
+DROP TABLE IF EXISTS world_state;
+DROP TABLE IF EXISTS frogs;
+DROP TABLE IF EXISTS agents;
