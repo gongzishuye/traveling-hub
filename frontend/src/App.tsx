@@ -7,6 +7,7 @@ import { JourneyTimeline } from './components/JourneyTimeline'
 import { PostcardReveal } from './components/PostcardReveal'
 import { TravelJournal } from './components/TravelJournal'
 import { changePassword, getGameSnapshot, login } from './api/client'
+import { hasHTTPStatus } from './api/errors'
 import { toRemoteGame, type RemoteGame } from './api/game'
 import type { Postcard } from './domain/travel'
 import { preloadSceneHeroes } from './data/visualCatalog'
@@ -42,8 +43,12 @@ function App() {
       setError(null)
       setScreen('game')
     } catch (requestError) {
-      if (requestError instanceof Error && 'status' in requestError && requestError.status === 401) {
+      if (hasHTTPStatus(requestError, 401)) {
         setScreen('login')
+        return
+      }
+      if (hasHTTPStatus(requestError, 403)) {
+        setScreen('change-password')
         return
       }
       setError(requestError instanceof Error ? requestError.message : '暂时无法连接远行小屋，请稍后重试。')

@@ -3,6 +3,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
+import { hasHTTPStatus } from './api/errors'
 
 const travellingGame = {
   frog_id: 'frog-1',
@@ -30,6 +31,10 @@ afterEach(() => {
 })
 
 describe('App', () => {
+  it('recognizes an unauthorized status even when its error object comes from another runtime', () => {
+    expect(hasHTTPStatus({ status: 401 }, 401)).toBe(true)
+  })
+
   it('renders the server-owned journey and removes local departure controls', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(travellingGame)))
 
@@ -58,6 +63,14 @@ describe('App', () => {
     expect(await screen.findByRole('heading', { name: '登录远行小屋' })).toBeVisible()
     expect(screen.getByLabelText('邮箱')).toBeVisible()
     expect(screen.getByLabelText('密码')).toBeVisible()
+  })
+
+  it('shows the password change form when the existing session is restricted', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(null, { status: 403 })))
+
+    render(<App />)
+
+    expect(await screen.findByRole('heading', { name: '设置新密码' })).toBeVisible()
   })
 
   it('loads the game after a successful login', async () => {
