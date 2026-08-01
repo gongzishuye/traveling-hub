@@ -17,7 +17,8 @@ test:
 
 integration:
 	$(COMPOSE) up -d postgres redis
-	docker run --rm --network travelinghub_default -e GOPROXY=https://goproxy.cn,direct -e GOSUMDB=off -e TRAVELINGHUB_POSTGRES_DSN='postgres://travelinghub:travelinghub@postgres:5432/travelinghub?sslmode=disable' -e TRAVELINGHUB_REDIS_ADDR='redis:6379' -v travelinghub-go-mod:/go/pkg/mod -v travelinghub-go-build:/root/.cache/go-build -v "$(CURDIR):/app" -w /app golang:1.25 sh -lc 'export PATH=/usr/local/go/bin:$$PATH; go test -count=1 -tags=integration ./tests/integration && go test -count=1 -tags=integration ./internal/journey'
+	$(COMPOSE) exec -T postgres sh -lc 'psql -U travelinghub -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname = '\''travelinghub_test'\''" | grep -q 1 || createdb -U travelinghub travelinghub_test'
+	docker run --rm --network travelinghub_default -e GOPROXY=https://goproxy.cn,direct -e GOSUMDB=off -e TRAVELINGHUB_POSTGRES_DSN='postgres://travelinghub:travelinghub@postgres:5432/travelinghub_test?sslmode=disable' -e TRAVELINGHUB_REDIS_ADDR='redis:6379' -v travelinghub-go-mod:/go/pkg/mod -v travelinghub-go-build:/root/.cache/go-build -v "$(CURDIR):/app" -w /app golang:1.25 sh -lc 'export PATH=/usr/local/go/bin:$$PATH; go test -count=1 -tags=integration ./tests/integration && go test -count=1 -tags=integration ./internal/journey'
 
 fmt:
 	docker run --rm -v "$(CURDIR):/app" -w /app golang:1.25 sh -lc 'export PATH=/usr/local/go/bin:$$PATH; gofmt -w $$(find . -name "*.go" -not -path "./.git/*")'
