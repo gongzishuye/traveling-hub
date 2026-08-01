@@ -24,14 +24,14 @@ func (s Service) Authenticate(ctx context.Context, rawToken string) (Principal, 
 		return Principal{}, fmt.Errorf("missing bearer token")
 	}
 	digest := sha256.Sum256([]byte(rawToken))
-	id := uuid.New()
 	var agentID uuid.UUID
-	err := s.db.QueryRowContext(ctx, `
-		INSERT INTO agents (id, token_digest) VALUES ($1, $2)
-		ON CONFLICT (token_digest) DO UPDATE SET updated_at = NOW()
-		RETURNING id`, id, digest[:]).Scan(&agentID)
+	column := "token_digest"
+	if strings.HasPrefix(rawToken, "thub_") {
+		column = "api_key_digest"
+	}
+	err := s.db.QueryRowContext(ctx, `SELECT id FROM agents WHERE `+column+` = $1`, digest[:]).Scan(&agentID)
 	if err != nil {
-		return Principal{}, fmt.Errorf("create or load agent: %w", err)
+		return Principal{}, fmt.Errorf("authenticate agent: %w", err)
 	}
 	return Principal{AgentID: agentID}, nil
 }

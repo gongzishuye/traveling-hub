@@ -8,6 +8,8 @@ import (
 	"github.com/faria/traveling-hub/internal/agent"
 	"github.com/faria/traveling-hub/internal/event"
 	"github.com/faria/traveling-hub/internal/frog"
+	"github.com/faria/traveling-hub/internal/identity"
+	"github.com/faria/traveling-hub/internal/journey"
 	"github.com/faria/traveling-hub/internal/platform/config"
 	postgresplatform "github.com/faria/traveling-hub/internal/platform/postgres"
 	redisplatform "github.com/faria/traveling-hub/internal/platform/redis"
@@ -25,6 +27,8 @@ type App struct {
 	World      world.Service
 	Events     event.Service
 	Simulation simulation.Service
+	Identity   identity.Service
+	Journeys   journey.Service
 }
 
 func New(ctx context.Context, cfg config.Config) (*App, error) {
@@ -47,9 +51,17 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	frogs := frog.NewService(db)
 	worldService := world.NewService(db, world.SystemClock())
 	events := event.NewService(db)
+	var mailer identity.VerificationMailer
+	if cfg.SMTPAddr != "" {
+		mailer = identity.NewSMTPMailer(cfg.SMTPAddr, cfg.SMTPFrom, cfg.SMTPUsername, cfg.SMTPPassword)
+	}
+	identityService := identity.NewService(db, rdb, cfg.SessionTTL, cfg.AutoVerifyEmail, mailer, cfg.WebOrigin)
+	journeys := journey.NewService(journey.NewRepository(db), world.SystemClock(), nil)
 	return &App{
 		Config: cfg, DB: db, Redis: rdb, Agents: agents, Frogs: frogs,
 		World: worldService, Events: events, Simulation: simulation.NewService(worldService, events),
+		Identity: identityService,
+		Journeys: journeys,
 	}, nil
 }
 

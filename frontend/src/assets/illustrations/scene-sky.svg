@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">暮色山谷天空</title>
+  <desc id="desc">暖灰蓝天空、三层云和远处浅色山影组成的原创插画背景。</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#9abfc6"/>
+      <stop offset="1" stop-color="#f1dfbd"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" fill="url(#sky)"/>
+  <circle cx="758" cy="92" r="42" fill="#fff1c8" opacity=".9"/>
+  <g fill="#f8efd9" opacity=".82">
+    <path d="M92 144c24-38 70-33 88 1 47-22 88 9 83 42H58c-4-19 10-35 34-43Z"/>
+    <path d="M498 98c18-30 54-27 68 0 39-18 70 8 65 35H468c-2-16 11-29 30-35Z"/>
+    <path d="M730 214c20-33 59-29 73 1 42-20 77 8 72 38H690c-3-18 12-32 40-39Z"/>
+  </g>
+  <path d="M0 310 160 246l115 48 120-88 141 90 134-74 110 55 80-31v294H0Z" fill="#8ca59a" opacity=".48"/>
+</svg>

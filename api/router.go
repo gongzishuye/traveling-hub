@@ -20,9 +20,9 @@ func NewRouter(application *appplatform.App) http.Handler {
 		writeJSON(w, http.StatusOK, map[string]string{"status": "ok", "version": application.Config.BuildVersion})
 	})
 	mux.Handle("GET /v1/me", authenticated(application, func(w http.ResponseWriter, r *http.Request, principal agent.Principal) {
-		frog, err := application.Frogs.EnsureForAgent(r.Context(), principal.AgentID)
+		frog, err := application.Frogs.GetForAgent(r.Context(), principal.AgentID)
 		if err != nil {
-			writeError(w, http.StatusInternalServerError, "unable to ensure frog")
+			writeError(w, http.StatusNotFound, "agent traveler not found")
 			return
 		}
 		writeJSON(w, http.StatusOK, map[string]string{"agent_id": principal.AgentID.String(), "frog_id": frog.ID.String()})
@@ -56,8 +56,8 @@ func NewRouter(application *appplatform.App) http.Handler {
 	}))
 	if application.Config.Environment == "development" {
 		mux.Handle("POST /v1/dev/fixture-tick", authenticated(application, func(w http.ResponseWriter, r *http.Request, principal agent.Principal) {
-			if _, err := application.Frogs.EnsureForAgent(r.Context(), principal.AgentID); err != nil {
-				writeError(w, http.StatusInternalServerError, "unable to ensure frog")
+			if _, err := application.Frogs.GetForAgent(r.Context(), principal.AgentID); err != nil {
+				writeError(w, http.StatusNotFound, "agent traveler not found")
 				return
 			}
 			result, err := application.Simulation.RunFixtureTick(r.Context(), principal.AgentID)
@@ -68,6 +68,9 @@ func NewRouter(application *appplatform.App) http.Handler {
 			writeJSON(w, http.StatusCreated, result)
 		}))
 	}
+	registerIdentityRoutes(mux, application)
+	registerWebAuthRoutes(mux, application)
+	registerGameRoutes(mux, application)
 	return mux
 }
 

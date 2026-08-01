@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">云脊坡旅行卡</title>
+  <desc id="desc">云雾绕过层叠山脊和松林的原创旅行卡插画。</desc>
+  <rect width="640" height="420" rx="22" fill="#f4ebd8"/>
+  <rect x="28" y="28" width="584" height="364" rx="14" fill="#9abfc6"/>
+  <path d="M28 300 196 148l93 91 119-142 204 203v92H28Z" fill="#587457"/>
+  <path d="M28 335 206 205l99 93 100-109 207 146v57H28Z" fill="#415d4a"/>
+  <path d="M197 149l92 90 119-142" fill="none" stroke="#dce7dc" stroke-width="18" opacity=".8"/>
+  <g fill="#f4ebd8" opacity=".82"><path d="M73 202c30-39 84-30 91 7 45-19 79 12 72 42H50c-8-23 2-40 23-49Z"/><path d="M366 258c28-37 79-29 87 5 45-17 78 12 71 40H342c-7-21 2-37 24-45Z"/></g>
+  <g fill="#2f513f"><path d="m108 323 25-74 25 74Z"/><path d="m155 331 29-88 29 88Z"/><path d="m480 337 28-85 28 85Z"/><path d="m526 344 25-72 25 72Z"/></g>
+</svg>

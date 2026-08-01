@@ -11,10 +11,19 @@ import (
 )
 
 func ApplyMigrations(ctx context.Context, db *sql.DB, directory string) error {
-	if _, err := db.ExecContext(ctx, `CREATE TABLE IF NOT EXISTS schema_migrations (version TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`); err != nil {
+	conn, err := db.Conn(ctx)
+	if err != nil {
+		return fmt.Errorf("reserve migration connection: %w", err)
+	}
+	defer conn.Close()
+	if _, err := conn.ExecContext(ctx, `SELECT pg_advisory_lock(742901)`); err != nil {
+		return fmt.Errorf("lock migrations: %w", err)
+	}
+	defer conn.ExecContext(context.Background(), `SELECT pg_advisory_unlock(742901)`)
+	if _, err := conn.ExecContext(ctx, `CREATE TABLE IF NOT EXISTS schema_migrations (version TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`); err != nil {
 		return fmt.Errorf("create migration table: %w", err)
 	}
-	directory, err := resolveMigrationDirectory(directory)
+	directory, err = resolveMigrationDirectory(directory)
 	if err != nil {
 		return err
 	}
@@ -31,7 +40,7 @@ func ApplyMigrations(ctx context.Context, db *sql.DB, directory string) error {
 	sort.Strings(names)
 	for _, name := range names {
 		var exists bool
-		if err := db.QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE version = $1)`, name).Scan(&exists); err != nil {
+		if err := conn.QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE version = $1)`, name).Scan(&exists); err != nil {
 			return fmt.Errorf("check migration %s: %w", name, err)
 		}
 		if exists {
@@ -41,7 +50,7 @@ func ApplyMigrations(ctx context.Context, db *sql.DB, directory string) error {
 		if err != nil {
 			return fmt.Errorf("read migration %s: %w", name, err)
 		}
-		tx, err := db.BeginTx(ctx, nil)
+		tx, err := conn.BeginTx(ctx, nil)
 		if err != nil {
 			return fmt.Errorf("begin migration %s: %w", name, err)
 		}

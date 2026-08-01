@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">林间庭院中景</title>
+  <desc id="desc">树冠、苔藓坡地和蜿蜒石路构成的原创庭院中景插画。</desc>
+  <path d="M0 232c91-71 184-84 298-38 113-70 222-63 331 9 105-57 219-47 331 7v330H0Z" fill="#718c68"/>
+  <path d="M0 332c115-54 228-48 339 14 125-55 237-42 342 19 92-55 185-56 279-18v193H0Z" fill="#587457"/>
+  <path d="M430 540c-35-108-4-191 107-260 68-42 99-96 106-154" fill="none" stroke="#d5b77a" stroke-width="46" stroke-linecap="round" opacity=".94"/>
+  <path d="M430 540c-35-108-4-191 107-260 68-42 99-96 106-154" fill="none" stroke="#f0d9a8" stroke-width="25" stroke-linecap="round"/>
+  <g fill="#466044">
+    <circle cx="90" cy="120" r="92"/><circle cx="183" cy="88" r="74"/><circle cx="34" cy="214" r="68"/>
+    <circle cx="834" cy="134" r="100"/><circle cx="926" cy="201" r="80"/><circle cx="758" cy="215" r="74"/>
+  </g>
+  <g fill="#a9bd71"><circle cx="94" cy="130" r="48"/><circle cx="180" cy="94" r="41"/><circle cx="836" cy="141" r="54"/><circle cx="925" cy="207" r="39"/></g>
+</svg>

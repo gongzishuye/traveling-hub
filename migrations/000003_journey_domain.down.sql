@@ -1,0 +1,10 @@
+DROP INDEX IF EXISTS album_entries_frog_created_idx;
+DROP TABLE IF EXISTS album_entries;
+DROP INDEX IF EXISTS daily_journeys_due_idx;
+DROP TABLE IF EXISTS daily_journeys;
+DROP INDEX IF EXISTS events_journey_stage_idx;
+ALTER TABLE events DROP COLUMN IF EXISTS deduplication_key;
+ALTER TABLE events DROP COLUMN IF EXISTS journey_stage;
+ALTER TABLE events DROP COLUMN IF EXISTS journey_id;
+ALTER TABLE events DROP CONSTRAINT IF EXISTS events_source_check;
+ALTER TABLE events ADD CONSTRAINT events_source_check CHECK (source = 'fixture');

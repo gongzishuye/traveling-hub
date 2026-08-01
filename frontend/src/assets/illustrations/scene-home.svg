@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">小屋前的旅人</title>
+  <desc id="desc">一位圆润的小旅人在木屋前整理围巾的原创前景插画。</desc>
+  <path d="M218 414h330V250l-165-128-165 128Z" fill="#70503b"/>
+  <path d="M193 261 383 101l190 160-37 27-153-128-153 128Z" fill="#b77453"/>
+  <rect x="286" y="286" width="82" height="128" rx="9" fill="#e0b76f"/>
+  <rect x="423" y="290" width="65" height="65" rx="8" fill="#a7c8cd" stroke="#f4ebd8" stroke-width="12"/>
+  <g transform="translate(621 290)">
+    <ellipse cx="72" cy="120" rx="62" ry="76" fill="#7f9c62"/>
+    <circle cx="72" cy="53" r="50" fill="#94ae6d"/>
+    <circle cx="53" cy="47" r="7" fill="#354b38"/><circle cx="91" cy="47" r="7" fill="#354b38"/>
+    <path d="M48 76c15 12 34 12 49 0" fill="none" stroke="#354b38" stroke-width="7" stroke-linecap="round"/>
+    <path d="M10 101c43 29 86 27 126-5" fill="none" stroke="#c49b55" stroke-width="17" stroke-linecap="round"/>
+    <rect x="101" y="96" width="35" height="47" rx="8" fill="#70503b"/>
+  </g>
+  <g fill="#f4ebd8"><circle cx="158" cy="438" r="9"/><circle cx="181" cy="429" r="7"/><circle cx="205" cy="443" r="8"/></g>
+</svg>

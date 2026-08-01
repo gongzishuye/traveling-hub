@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">柳影池旅行卡</title>
+  <desc id="desc">柳枝垂落在安静池水与石桥上的原创旅行卡插画。</desc>
+  <rect width="640" height="420" rx="22" fill="#f4ebd8"/>
+  <rect x="28" y="28" width="584" height="364" rx="14" fill="#a7c8cd"/>
+  <path d="M28 258c118-52 212-31 300 14 114-51 203-34 284 7v113H28Z" fill="#698b72"/>
+  <ellipse cx="333" cy="297" rx="211" ry="75" fill="#6fabb1"/>
+  <path d="M193 297c70-82 191-81 264 0" fill="none" stroke="#f4ebd8" stroke-width="18"/>
+  <path d="M176 76v160M212 86v137M129 109v111" stroke="#57764c" stroke-width="18" stroke-linecap="round"/>
+  <path d="M155 161c29 10 52 28 69 55M203 142c30 11 50 29 62 55M114 174c28 8 46 22 59 44" fill="none" stroke="#89a858" stroke-width="12" stroke-linecap="round"/>
+  <g fill="#f4ebd8" opacity=".6"><ellipse cx="330" cy="294" rx="72" ry="7"/><ellipse cx="371" cy="331" rx="53" ry="5"/></g>
+</svg>

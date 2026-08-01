@@ -1,0 +1,783 @@
+:root {
+  --color-canvas: #F4EBD8;
+  --color-garden-sage: #788D62;
+  --color-moss-dark: #354B38;
+  --color-sky-muted: #A7C8CD;
+  --color-terracotta: #B77453;
+  --color-walnut: #70503B;
+  --color-pollen-gold: #C49B55;
+  --color-canvas-strong: color-mix(in srgb, var(--color-canvas) 88%, transparent);
+  --color-canvas-soft: color-mix(in srgb, var(--color-canvas) 72%, transparent);
+  --color-canvas-faint: color-mix(in srgb, var(--color-canvas) 46%, transparent);
+  --color-paper-panel: color-mix(in srgb, var(--color-canvas) 86%, transparent);
+  --color-panel-fill: color-mix(in srgb, var(--color-canvas) 64%, transparent);
+  --color-control-fill: color-mix(in srgb, var(--color-canvas) 52%, transparent);
+  --color-border-subtle: color-mix(in srgb, var(--color-walnut) 24%, transparent);
+  --color-border-disabled: color-mix(in srgb, var(--color-walnut) 38%, transparent);
+  --color-disabled-fill: color-mix(in srgb, var(--color-garden-sage) 28%, transparent);
+  --color-path: color-mix(in srgb, var(--color-pollen-gold) 48%, transparent);
+  --color-light-patch: color-mix(in srgb, var(--color-pollen-gold) 34%, transparent);
+  --color-roof-shadow: color-mix(in srgb, var(--color-walnut) 34%, transparent);
+  --paper-base: var(--color-canvas);
+  --paper-edge: color-mix(in srgb, var(--color-canvas) 78%, var(--color-pollen-gold));
+  --paper-wash: color-mix(in srgb, var(--color-canvas) 82%, transparent);
+  --wood-dark: var(--color-walnut);
+  --wood-light: var(--color-terracotta);
+  --ink: var(--color-moss-dark);
+  --ink-muted: color-mix(in srgb, var(--color-moss-dark) 72%, transparent);
+  --shadow-overlay: 0 14px 30px color-mix(in srgb, var(--color-walnut) 22%, transparent);
+  --shadow-paper: 0 16px 40px color-mix(in srgb, var(--color-walnut) 16%, transparent);
+  --z-scene-overlay: 6;
+  --z-dialog: 10;
+  --space-1: 8px;
+  --space-2: calc(var(--space-1) * 2);
+  --space-3: calc(var(--space-1) * 3);
+  --space-4: calc(var(--space-1) * 4);
+  --radius-panel: 12px;
+  --radius-control: 8px;
+  --motion-fast: 180ms;
+  --motion-slow: 4s;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  color: var(--color-moss-dark);
+  background:
+    linear-gradient(var(--color-canvas-strong), var(--color-canvas-strong)),
+    radial-gradient(circle at top left, var(--color-sky-muted), transparent 42%);
+  font-family: Inter, 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  min-height: 44px;
+  border: 2px solid var(--color-walnut);
+  border-radius: var(--radius-control);
+  padding: var(--space-1) var(--space-2);
+  color: var(--color-canvas);
+  background: var(--color-moss-dark);
+  cursor: pointer;
+  transition:
+    background-color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+button:hover:not(:disabled) {
+  background: var(--color-terracotta);
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--color-pollen-gold);
+  outline-offset: 3px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  color: var(--color-moss-dark);
+  background: var(--color-disabled-fill);
+  border-color: var(--color-border-disabled);
+}
+
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'title'
+    'stage';
+  gap: var(--space-2);
+  align-items: start;
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  padding: var(--space-3);
+}
+
+h1 {
+  grid-area: title;
+  margin: 0 0 var(--space-3);
+  text-align: center;
+  font-size: 2rem;
+  letter-spacing: 0;
+}
+
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+.desktop-only-message {
+  display: none;
+}
+
+.single-scene-layout__journal h2,
+.journey-timeline h2,
+.album-strip h2 {
+  margin-bottom: var(--space-2);
+  font-size: 1.125rem;
+  letter-spacing: 0;
+}
+
+.travel-journal,
+.journey-timeline,
+.album-strip {
+  position: relative;
+  isolation: isolate;
+  color: var(--ink);
+  box-shadow: var(--shadow-overlay);
+}
+
+.travel-journal {
+  border: 1px solid var(--paper-edge);
+  border-radius: 3px 14px 8px 12px;
+  padding: var(--space-2);
+  background:
+    linear-gradient(100deg, color-mix(in srgb, var(--paper-base) 90%, transparent), var(--paper-wash)),
+    repeating-linear-gradient(0deg, transparent 0 27px, color-mix(in srgb, var(--wood-dark) 9%, transparent) 28px);
+}
+
+.travel-journal::before,
+.journey-timeline::before,
+.album-strip::before {
+  position: absolute;
+  z-index: -1;
+  inset: 5px;
+  border: 1px dashed color-mix(in srgb, var(--wood-dark) 28%, transparent);
+  content: '';
+  pointer-events: none;
+}
+
+.travel-journal::before {
+  border-radius: 2px 11px 6px 10px;
+}
+
+.travel-journal fieldset {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-2);
+  border: 0;
+  padding: 0;
+}
+
+.travel-journal legend {
+  margin-bottom: var(--space-1);
+  font-weight: 700;
+}
+
+.travel-journal__food {
+  display: grid;
+  grid-template-columns: 20px 52px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 72px;
+  border: 1px solid color-mix(in srgb, var(--wood-dark) 28%, transparent);
+  border-radius: 5px 10px 7px 4px;
+  padding: var(--space-1);
+  color: var(--ink);
+  background: color-mix(in srgb, var(--paper-base) 74%, transparent);
+  cursor: pointer;
+  transition: transform var(--motion-fast) ease, border-color var(--motion-fast) ease;
+}
+
+.travel-journal__food:hover:not(:has(input:disabled)) {
+  border-color: var(--wood-light);
+  transform: translateY(-1px);
+}
+
+.travel-journal__food--selected {
+  border-color: var(--wood-light);
+  background: color-mix(in srgb, var(--paper-edge) 74%, transparent);
+  box-shadow: inset 3px 0 var(--color-terracotta);
+}
+
+.travel-journal__food input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-garden-sage);
+}
+
+.travel-journal__food img {
+  display: block;
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.travel-journal__food-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--ink-muted);
+}
+
+.travel-journal__food-copy strong {
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.travel-journal__food-state {
+  grid-column: 3;
+  color: var(--wood-dark);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.travel-journal__summary {
+  margin: 0 0 var(--space-2);
+  border-left: 3px solid var(--color-pollen-gold);
+  padding: var(--space-1) var(--space-1) var(--space-1) 12px;
+  background: color-mix(in srgb, var(--paper-edge) 54%, transparent);
+}
+
+.travel-journal__summary h3 {
+  margin: 0 0 2px;
+  color: var(--wood-dark);
+  font-size: 0.875rem;
+}
+
+.travel-journal__summary p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.single-scene-layout__journal {
+  grid-area: stage;
+  z-index: var(--z-scene-overlay);
+  align-self: start;
+  justify-self: start;
+  width: 272px;
+  margin: 96px 0 0 var(--space-4);
+}
+
+.collapsible-panel {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.collapsible-panel__toggle {
+  justify-self: start;
+  min-height: 44px;
+  border-color: color-mix(in srgb, var(--paper-base) 82%, transparent);
+  color: var(--ink);
+  background: var(--color-paper-panel);
+  box-shadow: var(--shadow-overlay);
+}
+
+.collapsible-panel__toggle:hover:not(:disabled) {
+  color: var(--paper-base);
+  background: var(--color-terracotta);
+}
+
+.garden-stage {
+  grid-area: stage;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 8 / 5;
+  overflow: hidden;
+  border: 3px solid var(--color-walnut);
+  border-radius: var(--radius-panel);
+  background: var(--color-moss-dark);
+  box-shadow: var(--shadow-paper);
+}
+
+.scene-art,
+.scene-art__hero,
+.scene-art__layer {
+  position: absolute;
+  inset: 0;
+}
+
+.scene-art {
+  isolation: isolate;
+}
+
+.scene-art__hero {
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scene-art__layer {
+  pointer-events: none;
+}
+
+.scene-art__layer--sky {
+  z-index: 2;
+  background: linear-gradient(to right, color-mix(in srgb, var(--color-sky-muted) 38%, transparent), transparent 62%);
+  animation: scene-sky-haze 18s ease-in-out infinite alternate;
+}
+
+.scene-art__layer--middle {
+  z-index: 2;
+  background: linear-gradient(to bottom, transparent 56%, color-mix(in srgb, var(--color-moss-dark) 16%, transparent));
+  animation: scene-light-sweep 14s ease-in-out infinite alternate;
+}
+
+.scene-art__layer--foreground {
+  z-index: 4;
+  box-shadow: inset 0 0 96px color-mix(in srgb, var(--color-moss-dark) 30%, transparent);
+  animation: scene-foreground-breathe 16s ease-in-out infinite alternate;
+}
+
+.scene-art__motes {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.scene-art__mote {
+  position: absolute;
+  width: 7px;
+  height: 10px;
+  border-radius: 58% 42% 62% 38%;
+  background: color-mix(in srgb, var(--color-canvas) 88%, var(--color-pollen-gold));
+  box-shadow: 0 0 9px color-mix(in srgb, var(--color-pollen-gold) 44%, transparent);
+  opacity: 0;
+  animation: garden-mote-drift 15s ease-in-out infinite;
+}
+
+.scene-art__mote--one {
+  top: 21%;
+  left: 12%;
+  animation-delay: -2s;
+}
+
+.scene-art__mote--two {
+  top: 38%;
+  left: 28%;
+  animation-delay: -7s;
+}
+
+.scene-art__mote--three {
+  top: 18%;
+  left: 46%;
+  animation-delay: -11s;
+}
+
+.scene-art__mote--four {
+  top: 51%;
+  left: 63%;
+  animation-delay: -4s;
+}
+
+.scene-art__mote--five {
+  top: 30%;
+  left: 76%;
+  animation-delay: -9s;
+}
+
+.scene-art__mote--six {
+  top: 64%;
+  left: 86%;
+  animation-delay: -13s;
+}
+
+.crayfish-sprite {
+  position: absolute;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.crayfish-sprite--home {
+  top: 54%;
+  left: 35%;
+  width: 12%;
+}
+
+.crayfish-sprite img {
+  display: block;
+  width: 100%;
+}
+
+.garden-stage--returned .scene-art__mote {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-pollen-gold);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-pollen-gold) 88%, transparent);
+  animation-name: firefly-drift;
+}
+
+.scene-art__detail {
+  position: absolute;
+  z-index: 3;
+  width: clamp(104px, 15vw, 212px);
+  overflow: hidden;
+  border: 2px solid color-mix(in srgb, var(--color-canvas) 72%, transparent);
+  border-radius: var(--radius-control);
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--color-moss-dark) 26%, transparent);
+}
+
+.scene-art__detail img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.scene-art__detail--1 {
+  bottom: 7%;
+  left: 5%;
+}
+
+.scene-art__detail--2 {
+  top: 10%;
+  right: 6%;
+}
+
+.scene-art__detail--3 {
+  right: 20%;
+  bottom: 6%;
+}
+
+.garden-stage__state-label {
+  position: absolute;
+  z-index: 5;
+  top: var(--space-2);
+  left: 50%;
+  margin: 0;
+  border: 1px solid color-mix(in srgb, var(--color-canvas) 68%, transparent);
+  border-radius: 999px;
+  padding: calc(var(--space-1) / 2) var(--space-1);
+  color: var(--color-canvas);
+  font-size: 0.875rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--color-moss-dark) 72%, transparent);
+  transform: translateX(-50%);
+}
+
+.single-scene-layout__echoes {
+  grid-area: stage;
+  z-index: var(--z-scene-overlay);
+  align-self: start;
+  justify-self: end;
+  width: 280px;
+  margin: 96px var(--space-4) 0 0;
+  display: flex;
+  min-height: 430px;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.collapsible-panel--timeline .collapsible-panel__toggle,
+.collapsible-panel--album .collapsible-panel__toggle {
+  justify-self: end;
+}
+
+.collapsible-panel--album {
+  margin-top: auto;
+}
+
+.journey-timeline {
+  border: 1px solid color-mix(in srgb, var(--wood-dark) 32%, transparent);
+  border-radius: 13px 3px 11px 5px;
+  padding: var(--space-2);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--paper-base) 92%, transparent), var(--paper-wash)),
+    repeating-linear-gradient(0deg, transparent 0 23px, color-mix(in srgb, var(--wood-dark) 8%, transparent) 24px);
+}
+
+.journey-timeline::before {
+  border-radius: 10px 2px 8px 4px;
+}
+
+.journey-timeline__roadbook,
+.album-strip__cards {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.journey-timeline__entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  gap: var(--space-1);
+  align-items: start;
+  min-height: 44px;
+  padding: 3px 0;
+}
+
+.journey-timeline__entry:not(:last-child)::after {
+  position: absolute;
+  top: 21px;
+  bottom: -8px;
+  left: 6px;
+  width: 2px;
+  background: color-mix(in srgb, var(--wood-dark) 32%, transparent);
+  content: '';
+}
+
+.journey-timeline__node {
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  margin-top: 4px;
+  border: 3px solid var(--paper-base);
+  border-radius: 50%;
+  background: var(--wood-light);
+  box-shadow: 0 0 0 1px var(--wood-dark);
+}
+
+.journey-timeline__entry p {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.journey-timeline__stamp {
+  grid-column: 2;
+  justify-self: start;
+  border: 1px solid color-mix(in srgb, var(--wood-dark) 48%, transparent);
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: var(--wood-dark);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  transform: rotate(-2deg);
+}
+
+.album-strip {
+  border: 1px solid color-mix(in srgb, var(--wood-dark) 38%, transparent);
+  border-radius: 6px 12px 3px 10px;
+  padding: var(--space-2);
+  background: linear-gradient(135deg, var(--paper-wash), color-mix(in srgb, var(--paper-edge) 62%, transparent));
+  transform: rotate(0.25deg);
+}
+
+.album-strip::before {
+  border-radius: 4px 10px 2px 8px;
+}
+
+.album-strip__empty {
+  border: 1px solid color-mix(in srgb, var(--wood-dark) 22%, transparent);
+  padding: var(--space-2);
+  background: color-mix(in srgb, var(--paper-base) 62%, transparent);
+}
+
+.album-strip__empty p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.album-strip__card {
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr);
+  gap: var(--space-1);
+  align-items: start;
+  border: 1px solid color-mix(in srgb, var(--wood-dark) 26%, transparent);
+  border-radius: 3px 8px 5px 4px;
+  padding: var(--space-1);
+  color: var(--ink);
+  background: color-mix(in srgb, var(--paper-base) 78%, transparent);
+  text-align: left;
+}
+
+.album-strip__card:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--paper-edge) 72%, transparent);
+}
+
+.album-strip__card img {
+  display: block;
+  width: 82px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid color-mix(in srgb, var(--wood-dark) 36%, transparent);
+  padding: 2px;
+  background: var(--paper-base);
+}
+
+.album-strip h3 {
+  margin-bottom: var(--space-1);
+  color: var(--color-walnut);
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+
+.postcard-reveal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-dialog);
+  display: grid;
+  place-items: center;
+  padding: var(--space-3);
+  background: color-mix(in srgb, var(--color-moss-dark) 58%, transparent);
+}
+
+.postcard-reveal__panel {
+  width: min(100%, 440px);
+  border: 3px solid var(--color-walnut);
+  border-radius: var(--radius-panel);
+  padding: var(--space-3);
+  color: var(--color-moss-dark);
+  background: var(--color-canvas);
+  box-shadow: 0 24px 64px color-mix(in srgb, var(--color-moss-dark) 34%, transparent);
+}
+
+.postcard-reveal__panel h2 {
+  margin-bottom: var(--space-1);
+  color: var(--color-walnut);
+  font-size: 1.5rem;
+  letter-spacing: 0;
+}
+
+.postcard-reveal__panel p {
+  margin-bottom: var(--space-2);
+}
+
+.postcard-reveal__panel img {
+  display: block;
+  width: 100%;
+  margin: 0 0 var(--space-2);
+  border: 1px solid color-mix(in srgb, var(--wood-dark) 36%, transparent);
+  border-radius: var(--radius-control);
+}
+
+.postcard-reveal__panel button + button {
+  margin-left: var(--space-1);
+}
+
+@keyframes scene-sky-haze {
+  from {
+    opacity: 0.42;
+    transform: translateX(-1%);
+  }
+
+  to {
+    opacity: 0.7;
+    transform: translateX(1%);
+  }
+}
+
+@keyframes scene-light-sweep {
+  from {
+    opacity: 0.38;
+  }
+
+  to {
+    opacity: 0.72;
+  }
+}
+
+@keyframes scene-foreground-breathe {
+  from {
+    opacity: 0.52;
+  }
+
+  to {
+    opacity: 0.8;
+  }
+}
+
+@keyframes garden-mote-drift {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(-18px, 24px, 0) rotate(-12deg);
+  }
+
+  18%,
+  82% {
+    opacity: 0.82;
+  }
+
+  55% {
+    transform: translate3d(42px, -28px, 0) rotate(18deg);
+  }
+}
+
+@keyframes firefly-drift {
+  0%,
+  100% {
+    opacity: 0.08;
+    transform: translate3d(-12px, 10px, 0) scale(0.7);
+  }
+
+  45% {
+    opacity: 0.95;
+    transform: translate3d(24px, -20px, 0) scale(1.15);
+  }
+
+  72% {
+    opacity: 0.32;
+    transform: translate3d(38px, -6px, 0) scale(0.85);
+  }
+}
+
+@media (max-width: 1199px) {
+  main {
+    padding: var(--space-2);
+  }
+
+  .single-scene-layout__journal {
+    width: 208px;
+    margin-left: var(--space-2);
+  }
+
+  .single-scene-layout__echoes {
+    width: 224px;
+    margin-right: var(--space-2);
+  }
+}
+
+@media (max-width: 1023px) {
+  main {
+    min-height: 100vh;
+    grid-template-columns: minmax(0, 1fr);
+    place-items: center;
+    width: 100%;
+    padding: var(--space-3);
+  }
+
+  main > :not(.desktop-only-message) {
+    display: none;
+  }
+
+  .desktop-only-message {
+    display: block;
+    margin: 0;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-panel);
+    padding: var(--space-2) var(--space-3);
+    text-align: center;
+    font-weight: 700;
+    background: var(--color-paper-panel);
+    box-shadow: var(--shadow-paper);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-art__layer--sky,
+  .scene-art__layer--middle,
+  .scene-art__layer--foreground,
+  .scene-art__mote {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" role="img" aria-labelledby="title desc">
+  <title id="title">野餐篮</title>
+  <desc id="desc">装着面包、浆果和亚麻布的编织野餐篮原创插画。</desc>
+  <rect width="480" height="320" rx="36" fill="#e7ddc6"/>
+  <path d="M134 148c0-78 212-78 212 0" fill="none" stroke="#70503b" stroke-width="30" stroke-linecap="round"/>
+  <path d="M104 143h272l-25 120H129Z" fill="#b77d4f"/>
+  <path d="M116 170h248M122 204h237M130 236h222" stroke="#e5bd79" stroke-width="11" opacity=".9"/>
+  <path d="M176 149c0-39 56-58 81-24 27-34 85-11 75 27Z" fill="#f4e1b7"/>
+  <g fill="#9a4f47"><circle cx="303" cy="159" r="15"/><circle cx="329" cy="177" r="15"/><circle cx="298" cy="190" r="15"/></g>
+  <path d="M301 142c7-17 20-22 32-23" fill="none" stroke="#57764c" stroke-width="8" stroke-linecap="round"/>
+</svg>

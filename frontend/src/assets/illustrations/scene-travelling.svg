@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">石路上的旅人</title>
+  <desc id="desc">一位背着行囊的小旅人沿着苔藓石路远行的原创前景插画。</desc>
+  <path d="M0 437c116-43 219-32 312 31 99-57 216-58 342 2 90-49 192-48 306 13v57H0Z" fill="#3f5d43"/>
+  <g transform="translate(512 190)">
+    <ellipse cx="73" cy="143" rx="59" ry="73" fill="#6f8c60"/>
+    <circle cx="73" cy="78" r="49" fill="#8eaa6b"/>
+    <circle cx="55" cy="71" r="7" fill="#354b38"/><circle cx="92" cy="71" r="7" fill="#354b38"/>
+    <path d="M59 99c10 7 20 7 29 0" fill="none" stroke="#354b38" stroke-width="6" stroke-linecap="round"/>
+    <path d="M31 118c33 17 66 18 102 0" fill="none" stroke="#b77453" stroke-width="14" stroke-linecap="round"/>
+    <rect x="-5" y="107" width="35" height="54" rx="9" fill="#70503b"/>
+    <path d="M41 205 25 246M101 205l18 40" stroke="#354b38" stroke-width="15" stroke-linecap="round"/>
+  </g>
+  <g fill="#f4ebd8" opacity=".93"><ellipse cx="205" cy="321" rx="25" ry="11"/><ellipse cx="261" cy="293" rx="18" ry="8"/><ellipse cx="730" cy="276" rx="23" ry="10"/></g>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">归来的旅人</title>
+  <desc id="desc">一位旅人提着旅行卡在亮起灯火的小屋前归来的原创前景插画。</desc>
+  <path d="M218 414h330V250l-165-128-165 128Z" fill="#70503b"/>
+  <path d="M193 261 383 101l190 160-37 27-153-128-153 128Z" fill="#b77453"/>
+  <rect x="286" y="286" width="82" height="128" rx="9" fill="#d49b57"/>
+  <rect x="423" y="290" width="65" height="65" rx="8" fill="#ffe4a6" stroke="#f4ebd8" stroke-width="12"/>
+  <g transform="translate(621 282)">
+    <ellipse cx="72" cy="126" rx="62" ry="76" fill="#7f9c62"/>
+    <circle cx="72" cy="59" r="50" fill="#94ae6d"/>
+    <circle cx="53" cy="53" r="7" fill="#354b38"/><circle cx="91" cy="53" r="7" fill="#354b38"/>
+    <path d="M47 82c15 13 35 13 50 0" fill="none" stroke="#354b38" stroke-width="7" stroke-linecap="round"/>
+    <path d="M17 111c38 22 79 21 115-4" fill="none" stroke="#c49b55" stroke-width="17" stroke-linecap="round"/>
+    <rect x="119" y="93" width="57" height="42" rx="5" fill="#f4ebd8" stroke="#b77453" stroke-width="6"/>
+    <path d="M130 106h36M130 118h28" stroke="#a7c8cd" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <g fill="#ffe4a6"><circle cx="186" cy="445" r="8"/><circle cx="213" cy="435" r="6"/><circle cx="240" cy="447" r="7"/></g>
+</svg>
