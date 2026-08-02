@@ -17,7 +17,7 @@ func TestLoadUsesDefaults(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Load() error = %v", err)
 	}
-	if cfg.HTTPAddr != ":8080" || cfg.Environment != "development" || cfg.WebOrigin != "http://localhost:5173" {
+	if cfg.HTTPAddr != ":8080" || cfg.Environment != "development" || cfg.WebOrigin != "http://127.0.0.1:5173" {
 		t.Fatalf("Load() = %#v, want default HTTP address and environment", cfg)
 	}
 }

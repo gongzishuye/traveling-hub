@@ -36,7 +36,7 @@ func Load() (Config, error) {
 		BuildVersion:          value("TRAVELINGHUB_BUILD_VERSION", "dev"),
 		SessionTTL:            duration("TRAVELINGHUB_SESSION_TTL", 7*24*time.Hour),
 		AutoVerifyEmail:       value("TRAVELINGHUB_AUTO_VERIFY_EMAIL", "false") == "true",
-		WebOrigin:             value("TRAVELINGHUB_WEB_ORIGIN", "http://localhost:5173"),
+		WebOrigin:             value("TRAVELINGHUB_WEB_ORIGIN", "http://127.0.0.1:5173"),
 		SMTPAddr:              strings.TrimSpace(os.Getenv("TRAVELINGHUB_SMTP_ADDR")),
 		SMTPFrom:              strings.TrimSpace(os.Getenv("TRAVELINGHUB_SMTP_FROM")),
 		SMTPUsername:          strings.TrimSpace(os.Getenv("TRAVELINGHUB_SMTP_USERNAME")),
